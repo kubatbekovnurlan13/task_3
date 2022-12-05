@@ -1,10 +1,10 @@
-package org.example;
+package model;
 
-public class VariableKeeper {
+public class Division {
     private int dividend;
     private int divider;
 
-    public VariableKeeper(int dividend, int divider) {
+    public Division(int dividend, int divider) {
         this.dividend = dividend;
         this.divider = divider;
     }

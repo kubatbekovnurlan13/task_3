@@ -1,14 +1,16 @@
-package org.example;
+package service;
+
+import model.Division;
 
 import java.util.ArrayList;
 
-public class DividingNumberService {
+public class DivisionService {
     private final ArrayList<String> resultsOfOperation;
     private final ArrayList<Integer> whereNumberStarts;
     private final ArrayList<Integer> whereNumberEnd;
 
-    public DividingNumberService(VariableKeeper variableKeeper) {
-        this.resultsOfOperation = resultsOfOperation(variableKeeper.getDividend(), variableKeeper.getDivider());
+    public DivisionService(Division division) {
+        this.resultsOfOperation = resultsOfOperation(division.getDividend(), division.getDivider());
         this.whereNumberStarts = deteremineWhereNumberStarts(this.resultsOfOperation);
         this.whereNumberEnd = deteremineWhereNumberEnd(this.resultsOfOperation);
 
@@ -27,7 +29,6 @@ public class DividingNumberService {
     }
 
     private ArrayList<String> resultsOfOperation(int dividend, int divider) {
-
         int[] separateIntegersOfDividend = makeFromDividendToSeparateIntegerArray(dividend);
 
         ArrayList<String> resultsOfOperation = new ArrayList<>();
@@ -35,58 +36,80 @@ public class DividingNumberService {
         resultsOfOperation.add(String.valueOf(divider));
         resultsOfOperation.add(String.valueOf(dividend / divider));
 
-
         for (int indexOfColumnInSeparateIntegers = 0; indexOfColumnInSeparateIntegers < separateIntegersOfDividend.length; indexOfColumnInSeparateIntegers++) {
-
             int integerForSubtract = makeIntegerForSubtract(separateIntegersOfDividend, indexOfColumnInSeparateIntegers);
 
             if (integerForSubtract > divider) {
 
-                StringBuilder stringForSubtract = new StringBuilder(String.valueOf(integerForSubtract));
-                int lengthOfIntegerThatGoesForSubtract = String.valueOf(integerForSubtract).length();
-
-                int amountOfColumnInDigit = indexOfColumnInSeparateIntegers + 1;
-
-                int lengthOfBlanksOfDividend = amountOfColumnInDigit - lengthOfIntegerThatGoesForSubtract;
-
-                for (int counterOfBlanks = 0; lengthOfBlanksOfDividend > counterOfBlanks; counterOfBlanks++) {
-                    stringForSubtract.insert(0, " ");
-                }
-
-                resultsOfOperation.add(stringForSubtract.toString());
+                String stringForSubtract = makeNumberForSubtraction(integerForSubtract, indexOfColumnInSeparateIntegers);
+                resultsOfOperation.add(stringForSubtract);
 
                 int lesserIntegerForSubtract = integerForSubtract / divider * divider;
                 int integerResultOfSubtraction = integerForSubtract - lesserIntegerForSubtract;
 
-                StringBuilder lesserStringForSubtract = new StringBuilder(String.valueOf(lesserIntegerForSubtract));
-                int lengthOfBlanksOfDivider = stringForSubtract.toString().length() - lesserStringForSubtract.length();
+                String lesserStringForSubtract = makeLesserNumberForSubtraction(lesserIntegerForSubtract, stringForSubtract);
+                resultsOfOperation.add(lesserStringForSubtract);
 
-                for (int counterOfBlanks = 0; lengthOfBlanksOfDivider > counterOfBlanks; counterOfBlanks++) {
-                    lesserStringForSubtract.insert(0, " ");
-                }
+                writingResultsOfSubtraction(integerResultOfSubtraction, indexOfColumnInSeparateIntegers,
+                        separateIntegersOfDividend);
+            }
+        }
+        String lastNumber = makeLastNumber(separateIntegersOfDividend);
 
-                resultsOfOperation.add(lesserStringForSubtract.toString());
+        resultsOfOperation.add(lastNumber);
+        return resultsOfOperation;
+    }
 
-                String stringResultOfSubtraction = integerResultOfSubtraction + " ".trim();
+    private void writingResultsOfSubtraction(int integerResultOfSubtraction, int indexOfColumnInSeparateIntegers,
+                            int[] separateIntegersOfDividend) {
+        String stringResultOfSubtraction = integerResultOfSubtraction + " ".trim();
 
-                for (int y = indexOfColumnInSeparateIntegers; y >= 0; y--) {
-                    if (integerResultOfSubtraction == 0) {
-                        separateIntegersOfDividend[y] = 0;
+        for (int y = indexOfColumnInSeparateIntegers; y >= 0; y--) {
+            if (integerResultOfSubtraction == 0) {
+                separateIntegersOfDividend[y] = 0;
+            }
+            if (integerResultOfSubtraction != 0) {
+                int lengthOfStringResultOfSubtraction = stringResultOfSubtraction.length();
+                for (int j = indexOfColumnInSeparateIntegers; j >= 0; j--) {
+                    if (lengthOfStringResultOfSubtraction > 0) {
+                        separateIntegersOfDividend[j] = Integer.parseInt(stringResultOfSubtraction.substring(lengthOfStringResultOfSubtraction - 1, lengthOfStringResultOfSubtraction));
+                    } else {
+                        separateIntegersOfDividend[j] = 0;
                     }
-                    if (integerResultOfSubtraction != 0) {
-                        int lengthOfStringResultOfSubtraction = stringResultOfSubtraction.length();
-                        for (int j = indexOfColumnInSeparateIntegers; j >= 0; j--) {
-                            if (lengthOfStringResultOfSubtraction > 0) {
-                                separateIntegersOfDividend[j] = Integer.parseInt(stringResultOfSubtraction.substring(lengthOfStringResultOfSubtraction - 1, lengthOfStringResultOfSubtraction));
-                            } else {
-                                separateIntegersOfDividend[j] = 0;
-                            }
-                            lengthOfStringResultOfSubtraction--;
-                        }
-                    }
+                    lengthOfStringResultOfSubtraction--;
                 }
             }
         }
+    }
+
+    private String makeNumberForSubtraction(int integerForSubtract, int indexOfColumnInSeparateIntegers) {
+
+        StringBuilder stringForSubtract = new StringBuilder(String.valueOf(integerForSubtract));
+        int lengthOfIntegerThatGoesForSubtract = String.valueOf(integerForSubtract).length();
+
+        int amountOfColumnInDigit = indexOfColumnInSeparateIntegers + 1;
+
+        int lengthOfBlanksOfDividend = amountOfColumnInDigit - lengthOfIntegerThatGoesForSubtract;
+
+        for (int counterOfBlanks = 0; lengthOfBlanksOfDividend > counterOfBlanks; counterOfBlanks++) {
+            stringForSubtract.insert(0, " ");
+        }
+
+        return stringForSubtract.toString();
+    }
+
+    private String makeLesserNumberForSubtraction(int lesserIntegerForSubtract, String stringForSubtract) {
+        StringBuilder lesserStringForSubtract = new StringBuilder(String.valueOf(lesserIntegerForSubtract));
+        int lengthOfBlanksOfDivider = stringForSubtract.length() - lesserStringForSubtract.length();
+
+        for (int counterOfBlanks = 0; lengthOfBlanksOfDivider > counterOfBlanks; counterOfBlanks++) {
+            lesserStringForSubtract.insert(0, " ");
+        }
+
+        return lesserStringForSubtract.toString();
+    }
+
+    private String makeLastNumber(int[] separateIntegersOfDividend) {
 
         StringBuilder lastNumber = new StringBuilder();
         for (int each : separateIntegersOfDividend) {
@@ -94,10 +117,7 @@ public class DividingNumberService {
                 lastNumber.append(" ");
             else lastNumber.append(each);
         }
-        resultsOfOperation.add(lastNumber.toString());
-        return resultsOfOperation;
-
-//        printResults(resultsOfOperation);
+        return lastNumber.toString();
     }
 
     private ArrayList<Integer> deteremineWhereNumberStarts(ArrayList<String> resultsOfOperation) {
