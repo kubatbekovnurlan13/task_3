@@ -25,9 +25,13 @@ public class Printer {
 
                 result.append(" ").append(blanksForDash).append(dashes).append(blanks).append(" |").append(allResults.get(2)).append("\n");
             } else if (counter == allResults.size() - 1) {
-                String number = allResults.get(counter);
+                String numberString = allResults.get(counter);
+
+                String number = numberString.trim() == "" ? "0" : numberString;
                 int integerDigit = Integer.parseInt(number.trim());
-                String blanks = " ".repeat(indicesOfNumbersWhereItStarts.get(counter));
+                int lengthOfBlank = indicesOfNumbersWhereItStarts.get(counter) == -1 ? 0 : indicesOfNumbersWhereItStarts.get(counter);
+
+                String blanks = " ".repeat(lengthOfBlank);
 
                 result.append(blanks).append(" ").append(integerDigit).append("\n");
             } else if (counter > 4 && counter % 2 != 0) {

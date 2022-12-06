@@ -6,7 +6,7 @@ import service.DivisionService;
 
 public class Application {
     public static void main(String[] args) {
-        Division division = new Division(78945, 4);
+        Division division = new Division(99999999, 3);
 
         DivisionService divisionService = new DivisionService(division);
 

@@ -61,7 +61,7 @@ public class DivisionService {
     }
 
     private void writingResultsOfSubtraction(int integerResultOfSubtraction, int indexOfColumnInSeparateIntegers,
-                            int[] separateIntegersOfDividend) {
+                                             int[] separateIntegersOfDividend) {
         String stringResultOfSubtraction = integerResultOfSubtraction + " ".trim();
 
         for (int y = indexOfColumnInSeparateIntegers; y >= 0; y--) {
@@ -110,12 +110,19 @@ public class DivisionService {
     }
 
     private String makeLastNumber(int[] separateIntegersOfDividend) {
-
         StringBuilder lastNumber = new StringBuilder();
-        for (int each : separateIntegersOfDividend) {
-            if (each == 0)
+
+        for (int i = 0; i < separateIntegersOfDividend.length; i++) {
+            if (i == separateIntegersOfDividend.length - 1 && lastNumber.toString().trim().isEmpty()) {
+                if (separateIntegersOfDividend[i] == 0)
+                    lastNumber.append("0");
+                else
+                    lastNumber.append(separateIntegersOfDividend[i]);
+            } else if (separateIntegersOfDividend[i] == 0) {
                 lastNumber.append(" ");
-            else lastNumber.append(each);
+            } else {
+                lastNumber.append(separateIntegersOfDividend[i]);
+            }
         }
         return lastNumber.toString();
     }
