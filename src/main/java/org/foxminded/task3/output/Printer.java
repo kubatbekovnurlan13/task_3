@@ -1,4 +1,4 @@
-package output;
+package org.foxminded.task3.output;
 
 import java.util.ArrayList;
 

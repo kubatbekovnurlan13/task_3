@@ -1,12 +1,12 @@
 package org.foxminded.task3;
 
-import output.Printer;
-import model.Division;
-import service.DivisionService;
+import org.foxminded.task3.output.Printer;
+import org.foxminded.task3.model.Division;
+import org.foxminded.task3.service.DivisionService;
 
 public class Application {
     public static void main(String[] args) {
-        Division division = new Division(99999999, 3);
+        Division division = new Division(99999, 3);
 
         DivisionService divisionService = new DivisionService(division);
 

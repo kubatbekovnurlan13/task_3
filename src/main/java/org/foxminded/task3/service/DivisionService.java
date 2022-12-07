@@ -1,6 +1,6 @@
-package service;
+package org.foxminded.task3.service;
 
-import model.Division;
+import org.foxminded.task3.model.Division;
 
 import java.util.ArrayList;
 

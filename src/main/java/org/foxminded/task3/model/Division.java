@@ -1,10 +1,10 @@
-package model;
+package org.foxminded.task3.model;
 
 public class Division {
-    private int dividend;
-    private int divider;
+    private final int dividend;
+    private final int divider;
 
-    public Division(int dividend, int divider) {
+    public Division(Integer dividend, Integer divider) {
         this.dividend = dividend;
         this.divider = divider;
     }
