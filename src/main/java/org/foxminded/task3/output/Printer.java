@@ -95,7 +95,7 @@ public class Printer {
         String blanks = " ".repeat(indicesOfNumbersWhereItStarts.get(counter));
         String blanksForDashes = " ".repeat(indicesOfNumbersWhereItStarts.get(counter - 1));
 
-        int lenghtOfDashes = indicesOfNumbersWhereItEnd.get(counter) - indicesOfNumbersWhereItStarts.get(counter) + 1;
+        int lenghtOfDashes = indicesOfNumbersWhereItEnd.get(counter-1) - indicesOfNumbersWhereItStarts.get(counter-1) + 1;
         String dashes = lenghtOfDashes == 0 ? "-" : "-".repeat(lenghtOfDashes);
 
         result.append(" ").append(blanks).append(integerDigit).append("\n");

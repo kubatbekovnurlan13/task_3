@@ -130,7 +130,7 @@ public class DivisionServiceTest {
     void getWhereNumberStarts_testGettingWhereNumberStarts_whenPositiveIntegerAndNegativeIntegerInput() {
         Division localDivision = new Division(3, -2);
         DivisionService localDivisionService = new DivisionService(localDivision);
-        
+
         ArrayList<Integer> actual = localDivisionService.getWhereNumberStarts();
         ArrayList<Integer> expected = new ArrayList<>(
                 Arrays.asList(0, 0, 0, 0, 0, 0)

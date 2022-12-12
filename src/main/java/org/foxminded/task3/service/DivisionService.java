@@ -112,16 +112,18 @@ public class DivisionService {
     private String makeLastNumber(int[] separateIntegersOfDividend) {
         StringBuilder lastNumber = new StringBuilder();
 
+        boolean switcherFromBlankToNumber = false;
         for (int i = 0; i < separateIntegersOfDividend.length; i++) {
             if (i == separateIntegersOfDividend.length - 1 && lastNumber.toString().trim().isEmpty()) {
                 if (separateIntegersOfDividend[i] == 0)
                     lastNumber.append("0");
                 else
                     lastNumber.append(separateIntegersOfDividend[i]);
-            } else if (separateIntegersOfDividend[i] == 0) {
+            } else if (separateIntegersOfDividend[i] == 0 && !switcherFromBlankToNumber) {
                 lastNumber.append(" ");
             } else {
                 lastNumber.append(separateIntegersOfDividend[i]);
+                switcherFromBlankToNumber = true;
             }
         }
         return lastNumber.toString();

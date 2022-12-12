@@ -6,7 +6,7 @@ import org.foxminded.task3.service.DivisionService;
 
 public class Application {
     public static void main(String[] args) {
-        Division division = new Division(99999, 3);
+        Division division = new Division(1000156, 523);
 
         DivisionService divisionService = new DivisionService(division);
 
@@ -14,6 +14,7 @@ public class Application {
         String result = printer.printResults(divisionService.getResultsOfOperation(),
                 divisionService.getWhereNumberStarts(),
                 divisionService.getWhereNumberEnd());
+
         System.out.println(result);
     }
 }
