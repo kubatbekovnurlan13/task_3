@@ -1,7 +1,6 @@
-package org.foxminded.task3;
+package org.foxminded.task3.output;
 
 import org.foxminded.task3.model.Division;
-import org.foxminded.task3.output.Printer;
 import org.foxminded.task3.service.DivisionService;
 import org.junit.jupiter.api.Test;
 
